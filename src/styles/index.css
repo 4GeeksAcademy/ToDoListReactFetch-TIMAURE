@@ -28,7 +28,7 @@ body{
     border-radius: 2px;
     border: 1px solid #000000 ;
     border-bottom: 1px solid #000000;
-    box-shadow: 5px 5px 0  #d6d6d6, 10px 10px 0px  #bfbfbf, 15px 15px 5px  #777575 ;
+    box-shadow: 5px 5px 1px #d6d6d6, 10px 10px 1px  #bfbfbf, 15px 15px 5px  #a3a2a2 ;
     
   }
   
@@ -69,3 +69,4 @@ body{
     margin-top: 10px;
     color: #555353;
   }
+ 
