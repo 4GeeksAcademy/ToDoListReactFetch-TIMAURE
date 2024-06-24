@@ -1,72 +1,94 @@
-body{
-    background-color: cornsilk ;
+body {
+  background-color: cornsilk;
 }
+
 .contenedor {
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #060606;
-    border-radius: 5px;
-    background-color: #ffffff;
-    
-    margin: 10px;
-    
-  }
   
-  h1 {
-    
-    color: #333;
-    margin-left: 650px;
-    margin-top: 100px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 5px;
-    width: 1000px;
-    margin-left: 200px;
-    border-radius: 2px;
-    border: 1px solid #000000 ;
-    border-bottom: 1px solid #000000;
-    box-shadow: 5px 5px 1px #d6d6d6, 10px 10px 1px  #bfbfbf, 15px 15px 5px  #a3a2a2 ;
-    
-  }
-  
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #000000;
-    border-radius: 2px;
-    margin-left: 10px;
-  }
-  
-  input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 5px;
-  }
-  
-  .fa-x {
-    cursor: pointer;
-   visibility: hidden;
-    color: #fb8383; 
-  transition: color 0.3s ease-in-out; 
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #060606;
+  border-radius: 5px;
+  background-color: #ffffff;
+  margin: 10px;
+  width: 80%; 
+  margin: 0 auto;
 }
-.fa-x:hover {
-    color: #7c0000; 
-    
-  }
-  .conjunto:hover .fa-x{
-    visibility: visible;
-  }
-   
-  
-  .numeroPagina {
-    margin-left: 210px;
-    margin-top: 10px;
-    color: #555353;
-  }
+
+h1 {
+  color: #333;
  
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 5px;
+  width: 1000px;
+  margin-left: 450px;
+  border-radius: 2px;
+  border: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  box-shadow: 5px 5px 1px #d6d6d6, 10px 10px 1px  #bfbfbf, 15px 15px 5px  #a3a2a2;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #000000;
+  border-radius: 2px;
+  margin-left: 10px;
+  position: relative;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.fa-x {
+  cursor: pointer;
+  visibility: hidden;
+  color: #fb8383;
+  transition: color 0.3s ease-in-out;
+  position: absolute;
+  right: 10px;
+}
+
+li:hover .fa-x {
+  visibility: visible;
+}
+
+.fa-x:hover {
+  color: #7c0000;
+}
+
+.numeroPagina {
+  margin-left: 500px;
+  margin-top: 10px;
+  color: #555353;
+}
+
+.btn {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  margin: 20px auto; 
+  padding: 10px 20px; 
+  border: none; 
+  background-color: rgb(0, 123, 255); 
+  color: #ffffff; 
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: rgb(0, 153, 255); 
+  transform: scale(1.1); 
+}

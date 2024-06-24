@@ -1,73 +1,151 @@
-import React, { useState, useEffect} from "react";
-
+import React, { useState, useEffect } from "react";
 
 //create your first component
 const Home = () => {
-	const[todo,settodo] = useState([]);
-const[inputValue, setInputValue] = useState ("");
+  const [todo, setTodo] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
-useEffect(() => {
-	showTasks();
-}, []);
+  useEffect(() => {
+    getTasks();
+  }, []);
 
-async function showTasks() {
-	const response = await fetch(`https://glorious-invention-q7v6jp7pr5x63x5j9-3000.app.github.dev/users/TIMAURE`);
-	const data = await response.json();
-	const newTodos = data.todos;
-	settodo(newTodos);
-}
+  async function getTasks() {
+    try {
+      const response = await fetch(
+        "https://playground.4geeks.com/todo/users/TIMAURE"
+      );
+      if (!response.ok) {
+        if (response.status === 404) {
+          await createUser();
+          await getTasks();
+        } else {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+      } else {
+        const data = await response.json();
+        setTodo(data.todo || []); // Aseguramos que data.todo exista
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-const addTask = async () => {
-	if (!inputValue) {
-		alert("Por Favor Agrega Una Tarea");
-		return;
-	}
+  async function createUser() {
+    try {
+      const response = await fetch(
+        "https://playground.4geeks.com/todo/users/TIMAURE",
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+          },
+          body: JSON.stringify({
+            label: inputValue,
+            is_done: false,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error al crear usuario: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-	const body = {
-		label: inputValue,
-		"is_done": false
-	};
+  async function addTodo(e) {
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      try {
+        const newTodo = { label: inputValue, is_done: false };
+        const response = await fetch(
+          "https://playground.4geeks.com/todo/todos/TIMAURE",
+          {
+            method: "POST",
+            headers: {
+              accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newTodo),
+          }
+        );
+        if (response.ok) {
+          setTodo([...todo, newTodo]); // Agregar la nueva tarea a la lista local
+          setInputValue("");
+        } else {
+          const data = await response.json();
+          console.error("Error adding todo:", data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
-	try {
-		const response = await fetch("https://glorious-invention-q7v6jp7pr5x63x5j9-3000.app.github.dev/todos/TIMAURE", {
-			method: "POST",
-			headers: {
-				"accept": "application/json",
-				"Content-Type": "application/json"},
-			body: JSON.stringify(body)});
-		
-			const data = await response.json();
-		settodo([...todo, data]);
-	} catch (error) {
-		console.log(error);
-	}
-	setInputValue("");
+  async function deleteOne(id) {
+    try {
+      console.log(id);
+      const response = await fetch(
+        `https://playground.4geeks.com/todo/todos/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      console.log(response);
+      if (response.ok) setTodo(todo.filter((item) => item.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const deleteAll = async () => {
+    try {
+      const promises = todo.map((todo) => {
+        return fetch(`https://playground.4geeks.com/todo/todos/${todo.id}`, {
+          method: "DELETE",
+        });
+      });
+
+      await Promise.all(promises);
+      getTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="contenedo">
+      <h1>To Do List!</h1>
+      <ul>
+        <li>
+          <input
+            type="text"
+            placeholder="Tareas Por Hacer?"
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
+            onKeyDown={addTodo}
+          ></input>
+        </li>
+
+        {todo.map((item, index) => (
+  <li key={index}>
+    {item.label}
+    <i
+      className="fa-solid fa-x"
+      onClick={() => deleteOne(item.id)}
+    ></i>
+  </li>
+))}
+      </ul>
+      <div className="numeroPagina">
+        <strong>{todo.length} items</strong>
+      </div>
+      <button onClick={deleteAll} className="btn" type="button">
+  Delete All
+</button>
+    </div>
+  );
 };
-
-
-
-	return (
-		<div className="contenedo">
-<h1>To Do List!</h1>
-<ul>
-	<li><input type="text" 
-	placeholder="Tareas Por Hacer?" 
-	onChange={(e)=> setInputValue(e.target.value)} 
-	value={inputValue} 
-	onKeyDown={(e) =>{if (e.key === "Enter"){settodo(todo.concat([inputValue]));
-	setInputValue("");}} } ></input>
-	</li>
-	{todo.length === 0 ? (<li>"No hay tareas, añadir tareas"</li>) : todo.map((item, index) =><li className="conjunto" >{item}{""}
-		<i className="fa-solid fa-x" 
-		onClick={() => 
-		settodo(todo.filter((t, currentindex)=> index != currentindex))}>
-			</i></li>)}
-</ul>
-<div className="numeroPagina"><strong>{todo.length} items</strong></div>
-</div>);};
 
 export default Home;
 
-
-
-
+//create your first component
