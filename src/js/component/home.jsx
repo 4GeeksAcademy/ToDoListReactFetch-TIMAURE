@@ -23,7 +23,8 @@ const Home = () => {
         }
       } else {
         const data = await response.json();
-        setTodo(data.todo || []); // Aseguramos que data.todo exista
+        console.log(data);
+        setTodo(data.todos); 
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +70,7 @@ const Home = () => {
           }
         );
         if (response.ok) {
-          setTodo([...todo, newTodo]); // Agregar la nueva tarea a la lista local
+          setTodo([...todo, newTodo]); 
           setInputValue("");
         } else {
           const data = await response.json();
@@ -90,8 +91,12 @@ const Home = () => {
           method: "DELETE",
         }
       );
+      if (response.status === 204 ) {
+        console.log("Todo deleted successfully:", id);
+        getTasks();
+    }
       console.log(response);
-      if (response.ok) setTodo(todo.filter((item) => item.id !== id));
+      
     } catch (error) {
       console.log(error);
     }
@@ -148,4 +153,4 @@ const Home = () => {
 
 export default Home;
 
-//create your first component
+
