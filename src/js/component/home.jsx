@@ -70,14 +70,14 @@ const Home = () => {
           }
         );
         if (response.ok) {
-          setTodo([...todo, newTodo]); 
+          setTodo(prevTodo => [...prevTodo, newTodo]); 
           setInputValue("");
         } else {
           const data = await response.json();
           console.error("Error adding todo:", data);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   }
@@ -98,7 +98,7 @@ const Home = () => {
       console.log(response);
       
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -113,7 +113,7 @@ const Home = () => {
       await Promise.all(promises);
       getTasks();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
